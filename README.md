@@ -1,115 +1,67 @@
-# 🌱 Arduino Smart Irrigation System
+# Arduino Smart Irrigation System
 
-An automated plant irrigation system built with an Arduino Uno that monitors soil moisture levels and activates a water pump when the soil is too dry — eliminating the need for manual watering.
-
-> **Status:** Concept & Design Phase — hardware design and logic completed; physical build in progress.
-
+A soil moisture-based irrigation system designed using an Arduino Uno. The idea is simple — instead of watering plants manually and guessing whether the soil is dry or not, the system checks the moisture level automatically and only runs the pump when needed.
+Status: Design and planning phase. Components identified, circuit designed, code logic worked out. Physical build is the next step.
 ---
-
-## 📋 Overview
-
-Manual watering is inconsistent and often leads to either overwatering or underwatering plants. This project addresses that by using a soil moisture sensor to continuously monitor conditions and automatically triggering a relay-controlled water pump only when needed.
-
-The system also displays real-time moisture readings on an LCD screen, giving the user visibility into soil conditions at a glance.
-
+The Problem
+I noticed that plants are often either overwatered or underwatered because there's no consistent way to check soil conditions manually. This project is an attempt to solve that using basic sensor input and relay control.
 ---
-
-## ⚙️ Components
-
-| Component | Purpose |
-|---|---|
-| Arduino Uno | Main microcontroller — reads sensors and controls outputs |
-| Soil Moisture Sensor | Detects soil water content and sends analog signal to Arduino |
-| Relay Module | Acts as a switch to safely control the water pump from Arduino |
-| Water Pump (DC) | Delivers water to the plant when triggered by the relay |
-| LCD Display (16x2) | Shows live soil moisture readings and pump status |
-| Jumper Wires & Breadboard | Prototyping and circuit connections |
-
+Components
+Component	Purpose
+Arduino Uno	Main microcontroller
+Soil Moisture Sensor	Reads water content in the soil
+Relay Module	Controls the pump safely from the Arduino
+Water Pump (DC)	Pumps water when soil is dry
+LCD Display (16x2)	Shows current moisture level and pump status
+Jumper Wires & Breadboard	Circuit connections for prototyping
 ---
-
-## 🔧 How It Works
-
-1. The **soil moisture sensor** continuously reads the water content of the soil and sends an analog voltage to the Arduino.
-2. The Arduino compares the reading against a **predefined moisture threshold**.
-3. If the soil is **too dry** (reading below threshold), the Arduino activates the **relay module**, which switches on the water pump.
-4. The pump runs until the moisture level rises above the threshold, at which point the relay cuts power to the pump.
-5. The **LCD display** shows the current moisture value and whether the pump is ON or OFF in real time.
-
+How It Works
+The moisture sensor sends an analog reading to the Arduino. If the reading falls below a set threshold (meaning the soil is dry), the Arduino triggers the relay, which switches the pump on. Once the moisture level recovers, the pump switches off. The LCD shows what's happening in real time.
+The threshold value can be adjusted in the code depending on the plant type.
 ---
-
-## 🗂️ Project Structure
-
-```
-smart-irrigation/
-├── README.md
-├── src/
-│   └── irrigation.ino       # Main Arduino sketch
-├── circuit/
-│   └── wiring_diagram.png   # Circuit diagram (coming soon)
-└── docs/
-    └── project_report.pdf   # Design report (coming soon)
-```
-
----
-
-## 💻 Core Logic (Pseudocode)
-
+Core Logic
 ```cpp
 int moistureValue = analogRead(MOISTURE_SENSOR_PIN);
 
 if (moistureValue < DRY_THRESHOLD) {
-    // Soil is dry — activate pump
-    digitalWrite(RELAY_PIN, HIGH);
+    digitalWrite(RELAY_PIN, HIGH);  // turn pump on
     lcd.print("Pump: ON");
 } else {
-    // Soil is moist enough — keep pump off
-    digitalWrite(RELAY_PIN, LOW);
+    digitalWrite(RELAY_PIN, LOW);   // turn pump off
     lcd.print("Pump: OFF");
 }
 
-// Display live reading on LCD
 lcd.print("Moisture: ");
 lcd.print(moistureValue);
 ```
-
 ---
-
-## 🚀 Getting Started
-
-### Prerequisites
-- [Arduino IDE](https://www.arduino.cc/en/software) installed
-- `LiquidCrystal` library (included with Arduino IDE by default)
-
-### Upload the Code
-1. Clone this repository:
-   ```bash
-   git clone https://github.com/YOUR_USERNAME/smart-irrigation.git
-   ```
-2. Open `src/irrigation.ino` in the Arduino IDE.
-3. Connect your Arduino Uno via USB.
-4. Select **Tools > Board > Arduino Uno** and the correct COM port.
-5. Click **Upload**.
-
+What I Want to Add Later
+A timer so the pump doesn't run too long even if the sensor gives a bad reading
+Data logging to track moisture levels over time
+A manual override button
+Possibly a solar power setup for outdoor use
 ---
-
-## 📌 Planned Improvements
-
-- [ ] Add a timer to prevent overwatering even if sensor malfunctions
-- [ ] Log moisture data over time using an SD card module
-- [ ] Add a manual override button
-- [ ] Explore solar power for off-grid use
-
+Project Structure
+```
+smart-irrigation/
+├── README.md
+├── src/
+│   └── irrigation.ino
+├── circuit/
+│   └── wiring_diagram.png   (coming soon)
+└── docs/
+    └── project_report.pdf   (coming soon)
+```
 ---
-
-## 👤 Author
-
-**Bennet Enifa Sagene**  
-Hardware Engineering Student — University of Zimbabwe  
-📧 bennetsagene@gmail.com  
-🔗 [LinkedIn](https://www.linkedin.com/in/bennet-sagene-76a096376)
-
+Getting Started
+You'll need the Arduino IDE installed. The LiquidCrystal library comes with it by default so no extra installation needed.
+Clone the repo and open `src/irrigation.ino` in Arduino IDE
+Connect your Arduino Uno via USB
+Select the right board and COM port under Tools
+Upload
 ---
-
-## 📄 License
-
-This project is open source and available under the [MIT License](LICENSE).
+Author
+Bennet Enifa Sagene
+Hardware Engineering Student, University of Zimbabwe
+bennetsagene@gmail.com
+https://www.linkedin.com/in/bennet-sagene-76a096376
